@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Reader | APIVerve Tutorial</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>QR Code Reader</h1>
+    <p class="subtitle">Upload an image to decode its QR code</p>
+
+    <div class="upload-area" id="uploadArea">
+      <input type="file" id="fileInput" accept="image/*" hidden>
+      <div class="upload-icon">📷</div>
+      <p>Drop an image here or <span class="link">browse</span></p>
+      <p class="hint">Supports JPG, PNG, GIF (max 5MB)</p>
+    </div>
+
+    <div id="preview" class="preview">
+      <img id="previewImage" alt="Selected image">
+      <button id="clearBtn" class="clear-btn">✕</button>
+    </div>
+
+    <button id="scanBtn" class="scan-btn" disabled>Scan QR Code</button>
+
+    <div id="error" class="error"></div>
+
+    <div id="result" class="result">
+      <h3>Decoded Content</h3>
+      <div id="resultText" class="result-text"></div>
+      <button id="copyBtn" class="copy-btn">Copy to Clipboard</button>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
