@@ -1,6 +1,7 @@
 # QR Code Reader | APIVerve API Tutorial
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 [![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-yellow)](js/app.js)
 [![HTML5](https://img.shields.io/badge/HTML-5-orange)](index.html)
 [![APIVerve | QR Code Reader](https://img.shields.io/badge/APIVerve-QR_Code_Reader-purple)](https://apiverve.com/marketplace/qrcodereader?utm_source=github&utm_medium=tutorial&utm_campaign=qr-reader-html-tutorial)
