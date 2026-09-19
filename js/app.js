@@ -1,16 +1,13 @@
 /**
- * QR Code Reader - Tutorial Example
+ * QR Code Reader, an APIVerve template.
  *
- * A simple QR code scanner using the APIVerve QR Code Reader API.
+ * Upload a photo or screenshot of a QR code and read what it says. The page calls
+ * /api/scan (api/scan.js), which holds your API key and calls the QR Code Reader API:
  * https://apiverve.com/marketplace/qrcodereader
  */
 
-// ============================================
-// CONFIGURATION - Add your API key here
-// Get a free key at: https://dashboard.apiverve.com
-// ============================================
-const API_KEY = 'your-api-key-here';
-const API_URL = 'https://api.apiverve.com/v1/qrcodereader';
+// Vercel caps a function's request body at 4.5 MB; api/scan.js enforces the same limit.
+const MAX_MB = 4;
 
 // DOM Elements
 const uploadArea = document.getElementById('uploadArea');
@@ -56,15 +53,13 @@ uploadArea.addEventListener('drop', (e) => {
 
 // Handle selected file
 function handleFile(file) {
-  // Validate file type
-  if (!file.type.startsWith('image/')) {
-    showError('Please select an image file');
+  if (!['image/jpeg', 'image/png', 'image/gif'].includes(file.type)) {
+    showError('Use a JPG, PNG or GIF image');
     return;
   }
 
-  // Validate file size (5MB max)
-  if (file.size > 5 * 1024 * 1024) {
-    showError('File size must be less than 5MB');
+  if (file.size > MAX_MB * 1024 * 1024) {
+    showError(`Images must be ${MAX_MB} MB or smaller`);
     return;
   }
 
@@ -100,12 +95,6 @@ clearBtn.addEventListener('click', () => {
 scanBtn.addEventListener('click', async () => {
   if (!selectedFile) return;
 
-  // Check API key
-  if (API_KEY === 'your-api-key-here') {
-    showError('Add your API key to js/app.js first');
-    return;
-  }
-
   scanBtn.disabled = true;
   scanBtn.textContent = 'Scanning...';
   hideError();
@@ -116,27 +105,18 @@ scanBtn.addEventListener('click', async () => {
     const formData = new FormData();
     formData.append('image', selectedFile);
 
-    // Call the API
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'x-api-key': API_KEY
-      },
-      body: formData
-    });
-
+    // Your server route adds the key and calls APIVerve
+    const response = await fetch('/api/scan', { method: 'POST', body: formData });
     const data = await response.json();
 
-    if (data.status === 'ok' && data.data) {
-      // Show result
-      resultText.textContent = data.data.text || 'No text found';
+    if (response.ok) {
+      resultText.textContent = data.text || 'No text found';
       result.classList.add('show');
     } else {
       showError(data.error || 'No QR code found in image');
     }
   } catch (err) {
-    showError('Failed to scan QR code. Check your API key.');
-    console.error('API Error:', err);
+    showError('Couldn’t reach the server. Try again.');
   } finally {
     scanBtn.disabled = false;
     scanBtn.textContent = 'Scan QR Code';

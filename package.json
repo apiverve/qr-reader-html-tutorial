@@ -1,0 +1,12 @@
+{
+  "name": "qr-reader-html-tutorial",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env dev.mjs"
+  },
+  "engines": {
+    "node": ">=20.6"
+  }
+}
